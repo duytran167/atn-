@@ -62,12 +62,13 @@ $rowSP = $sp->rowSanPham($_GET['idSP']);
 </div>
 <h1>&nbsp;</h1><br>
 <h1>INSERT DATA TO DATABASE</h1>
+<h2> Enter Data to Database</h2>
 <?php 
 
 echo "Insert database!";
 ?>
 <ul>
-	<form name="Insert Data" action="DeletedData.php" method= "POST">
+	<form name="Insert Data" action="InsertData.php" method= "POST">
 		<li>PCID:</li><li><input type="text" name="PCID"/></li>
 		<li>PC Name:</li><li><input type="text" name="PcName"></li>
 		<li><input type="submit" /></li>
@@ -91,15 +92,22 @@ else {
 		ltrim($db["path"], "/")
 	));
 }
-$sql = "DELETED FROM pc WHERE PCID = '$_POST[pcid]'";
-
+if ($pdo === false) {
+	echo "ERROR: Could not connect DataBase";
+}
+$sql = "INSERT INTO pc(PcId, PcName)"
+	.VALUE('$_POST[PCID]', '$_POST[PcName]')";
 $stmt = $pdo->prepare($sql);
-
-if (is_null($_POST[pcid])== FALSE) {
-if($stmt->execute() == TRUE){
-echo " Record updated susccessfully.";
-} 
+#$stmt_>execute();
+if (is_null($_POST[pcid])) {
+    echo: "PC not be not null";
+ } 
 else 
 {
-		echo "Error updating record"
+if ($stmt ->execute() ==TRUE) {
+                echo "Record insert successfully"
 }
+else {
+                echo "Error inserting record"
+ }
+ }
