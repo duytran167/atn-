@@ -61,3 +61,45 @@ $rowSP = $sp->rowSanPham($_GET['idSP']);
     </div>
 </div>
 <h1>&nbsp;</h1><br>
+<h1>Update DATA TO DATABASE</h1>
+<?php 
+
+echo "Update database!";
+?>
+<ul>
+	<form name="Update Data" action="UpdateData.php" method= "POST">
+		<li>PCID:</li><li><input type="text" name="PCID"/></li>
+		<li>PC Name:</li><li><input type="text" name="PcName"></li>
+		<li><input type="submit" /></li>
+	</form>
+</ul>
+<?php
+
+if (empty(getenv("DATABASE_URL"))){
+echo '<p> The DB does not exist </p>';
+$pdo = new PDD ('pgsql:host=localhost;port=5432;dbname=mydb', 'postgres', '123456');
+
+}
+else {
+	$db = parse_url(gentenv("DATABASE_URL"));
+	$pdo = new PDD ("pgsql:" . sprintf(
+		"host=ec2-54-255-72-238.compute-1.amazonaws.com;port=5432;user=zyspzjqbrlxfnk;password=95402f2fc; dbname=d7f8iof0djq8lo",
+		$db["host"],
+		$db["port"],
+		$db["user"],
+		$db["pass"],
+		ltrim($db["path"], "/")
+	));
+}
+$sql = "UPDATE pc SET PcName = '$_POST[PcName]' WHERE PCID = '$_POST[pcid]'";
+
+$stmt = $pdo->prepare($sql);
+
+if (is_null($_POST[pcid])== FALSE) {
+if($stmt->execute() == TRUE){
+echo " Record updated susccessfully.";
+} 
+else 
+{
+		echo "Error updating record"
+}
