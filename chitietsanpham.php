@@ -61,13 +61,13 @@ $rowSP = $sp->rowSanPham($_GET['idSP']);
     </div>
 </div>
 <h1>&nbsp;</h1><br>
-<h1>Update DATA TO DATABASE</h1>
+<h1>INSERT DATA TO DATABASE</h1>
 <?php 
 
-echo "Update database!";
+echo "Insert database!";
 ?>
 <ul>
-	<form name="Update Data" action="UpdateData.php" method= "POST">
+	<form name="Insert Data" action="DeletedData.php" method= "POST">
 		<li>PCID:</li><li><input type="text" name="PCID"/></li>
 		<li>PC Name:</li><li><input type="text" name="PcName"></li>
 		<li><input type="submit" /></li>
@@ -91,7 +91,7 @@ else {
 		ltrim($db["path"], "/")
 	));
 }
-$sql = "UPDATE pc SET PcName = '$_POST[PcName]' WHERE PCID = '$_POST[pcid]'";
+$sql = "DELETED FROM pc WHERE PCID = '$_POST[pcid]'";
 
 $stmt = $pdo->prepare($sql);
 
